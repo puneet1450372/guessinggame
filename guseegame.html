@@ -1,0 +1,124 @@
+
+<!-- User story: A user can enter a number
+User story: The system picks a random number from 1 to 6
+User story: If the user's number is equal to a random number, give the user 2 points
+User story: If the user's number is different than the random number by 1,
+give the user 1 point. Otherwise, give the user 0 points
+User story: The user can play the game as long as they want to -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>guessing Game  </title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style type="text/css">
+		input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input[type=number]
+{
+	height: 40px;
+	width: 400px;
+}
+input[type=submit]
+{
+	margin-top: 15px;
+}
+p{
+text-align: center;
+font-style: italic;
+}
+
+	</style>
+
+</head>
+<body background="guessgame.jpg">
+	<!-- <h3>Rules to playing this Game</h3>
+	<ul>
+	<li> The system picks a random number from 1 to 6</li>
+	<li> If your choose  number is equal to a random number,we give 2 points</li>
+ <li>If the number is different than the random number than we give 1 points to you</li>
+ <li> otherwise we give zero '0' points</li>
+<li>You can play this game as long as you want to </li>
+	</ul> -->
+	<h1 style="text-align: center;font-size: 50px; color: #df97f7; margin-top: 10%;">
+		Guessing Game
+	</h1>
+	
+	<p>if you not fill any value than we assume Zero(0) by default value</p>
+<form  style="text-align: center;">
+	<input name="number" id="userinput" type="number" placeholder="Enter number between 1 to 6"><br>
+	<input type="submit" name="submit"  value="Start game" class="btn btn-primary" onclick="handleGuess()">
+	<!-- <button type="button" ">Primary</button> -->
+</form>
+
+<script type="text/javascript">
+const enternumber=()=>{
+	 return new Promise((resolve,reject)=>{
+		 // const userval = Number(window.prompt("Enter a number (1 - 6):"));
+		 const userval=document.getElementById('userinput').value;
+		 const randval = Math.floor(Math.random() * 6 + 1);
+		const valll=Math.abs(userval-randval);
+
+
+if(isNaN(userval)){
+	reject(new Error("please enter the correct value "))
+}
+
+if(userval==randval)
+{
+resolve({Points:2,randval,userval,});}
+
+else if(valll==1)
+{resolve({Points:1,randval,userval,});}
+
+else{resolve({Points:0,randval,userval,});
+}
+});
+};
+
+const continueGame = () => {
+  return new Promise((resolve) => {
+    if (window.confirm("Do you want to continue?")) 
+    { 
+      resolve(true);
+    } else {
+      resolve(false);
+    }
+  });
+};
+
+
+const handleGuess = async () => {
+  try {
+    const result = await enternumber(); 
+
+    alert(`Randome number:${result.randval} you got:${result.Points} ponits`);
+
+    const isContinuing = await continueGame();
+
+    if (isContinuing) {
+    
+    } else {
+
+      alert("Game ends");
+      alert('Thankyou for playing this such type of worst game');
+
+    }
+  }
+   catch (error) { 
+    alert(error);
+  }
+};
+
+
+</script>
+</body>
+</html>
