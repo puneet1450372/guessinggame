@@ -1,16 +1,11 @@
 
-<!-- User story: A user can enter a number
-User story: The system picks a random number from 1 to 6
-User story: If the user's number is equal to a random number, give the user 2 points
-User story: If the user's number is different than the random number by 1,
-give the user 1 point. Otherwise, give the user 0 points
-User story: The user can play the game as long as they want to -->
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>guessing Game  </title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 	<style type="text/css">
 		input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -40,26 +35,27 @@ font-style: italic;
 
 </head>
 <body background="guessgame.jpg">
-	<!-- <h3>Rules to playing this Game</h3>
-	<ul>
-	<li> The system picks a random number from 1 to 6</li>
-	<li> If your choose  number is equal to a random number,we give 2 points</li>
- <li>If the number is different than the random number than we give 1 points to you</li>
- <li> otherwise we give zero '0' points</li>
-<li>You can play this game as long as you want to </li>
-	</ul> -->
-	<h1 style="text-align: center;font-size: 50px; color: #df97f7; margin-top: 10%;">
+	
+	<h1 style="text-align: center;font-size: 50px; color: #df97f7; margin-top: 10%;" id="h1"> 
 		Guessing Game
 	</h1>
 	
-	
-<form  style="text-align: center;">
+	<p id="p">if you not fill any value than we assume Zero(0) by default value</p>
+<form  style="text-align: center;" action="" id='frm'>
 	<input name="number" id="userinput" type="text" placeholder="Enter number between 1 to 6"><br>
 	<input type="submit" name="submit"  value="Start game" class="btn btn-primary" onclick="handleGuess()">
 	<!-- <button type="button" ">Primary</button> -->
 </form>
-
+<!-- Button trigger modal -->
+<h2 style="display: none;" id="res">Your game is over </h2>
+<button onclick="back()" style="display: none" id="home" class="btn btn-primary">Home</button>
 <script type="text/javascript">
+
+function back(){
+
+	window.location.href='guseegame.html';
+}
+	
 const enternumber=()=>{
 	 return new Promise((resolve,reject)=>{
 		 // const userval = Number(window.prompt("Enter a number (1 - 6):"));
@@ -79,6 +75,7 @@ resolve({Points:2,randval,userval,});}
 else if(valll==1)
 {resolve({Points:1,randval,userval,});}
 
+
 else{resolve({Points:0,randval,userval,});
 }
 });
@@ -91,6 +88,7 @@ const continueGame = () => {
       resolve(true);
     } else {
       resolve(false);
+
     }
   });
 };
@@ -100,18 +98,30 @@ const handleGuess = async () => {
   try {
     const result = await enternumber(); 
 
-    alert(`Randome number:${result.randval} you got:${result.Points} points`);
+    alert(`Randome number:${result.randval} \n You Picked :${result.userval} \n you got:${result.Points} ponits`);
 
     const isContinuing = await continueGame();
 
     if (isContinuing) {
-    enternumber();
-    } else {
+    	enternumber();
+    
+    } 
+    else {
 
-      alert("Game ends");
-      alert('Thankyou for playing this such type of worst game');
-
+    	 alert("Game ends");
+ 
+  document.getElementById("h1").style.display = "none";
+  document.getElementById("p").style.display = "none";
+  document.getElementById("frm").style.display = "none";
+  document.getElementById("res").style.display = 'block';
+   document.getElementById("home").style.display = 'block';
+     
+     window.onbeforeunload = function() {
+        return "Dude, are you sure you want to leave? this game ";
     }
+  
+	}
+     
   }
    catch (error) { 
     alert(error);
