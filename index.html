@@ -67,7 +67,10 @@ const enternumber=()=>{
 if(isNaN(userval)){
 	reject(new Error("please enter the correct value "))
 }
-
+if(userval=='')
+{
+	reject(new Error("you can not play game with blank box"))
+}
 if(userval==randval)
 {
 resolve({Points:2,randval,userval,});}
